@@ -1,9 +1,12 @@
 package Bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import Model.Author;
 import interPackage.IAuthorRemote;
@@ -15,18 +18,21 @@ import interPackage.IAuthorRemote;
 @Stateless
 @LocalBean
 public class AuthorImpl implements IAuthorRemote {
+	@PersistenceContext
+	private EntityManager em;
 
-    /**
-     * Default constructor. 
-     */
+
+	List<Author> listAuthor = new ArrayList<Author>();
     public AuthorImpl() {
         // TODO Auto-generated constructor stub
     }
 
 	@Override
 	public Author createAuthor(String firstname, String lastname) {
-		// TODO Auto-generated method stub
-		return null;
+		Author auth = new Author(firstname, lastname);
+		listAuthor.add(auth);
+		//em.persist(auth);
+		return auth;
 	}
 
 	@Override
